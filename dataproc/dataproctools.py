@@ -2,6 +2,8 @@ import math
 import shutil
 import os
 
+# this is mine, also not great, but it kinda works
+
 DOMAINSPERWET = 20000
 def get_extracted_wet(spark_context, approx_sample_size, wet_paths_file = "data/wet.paths", seed = 0):
     sc = spark_context
@@ -58,13 +60,16 @@ def get_extracted_wet(spark_context, approx_sample_size, wet_paths_file = "data/
 
     return str_rdd
 
+
 def save_rdd(rdd, path_to_save, overwrite=False):
     if overwrite and os.path.exists(path_to_save):
         shutil.rmtree(path_to_save)
     rdd.saveAsPickleFile(path_to_save)
 
+
 def load_rdd(spark_context, path_to_load):
     return spark_context.pickleFile(path_to_load)
+
 
 def extracted_wet_to_df(spark_session, extracted_wet_rdd):
     ss = spark_session
@@ -112,3 +117,4 @@ def extracted_wet_to_df(spark_session, extracted_wet_rdd):
 
     tlds_added = with_processed_keys.map(lambda x: (x[0], x[1], x[2], x[3], get_tld_from_url(x[1]), x[4]))
     return ss.createDataFrame(tlds_added, schema=['warc_id', 'target_uri', 'date', 'languages', 'tld', 'raw_content'])
+
