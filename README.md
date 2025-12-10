@@ -2,11 +2,11 @@
 
 I have example code up in examples/data_proc_example.ipynb
 
-you don't need to run the get data script, i already have the necessary files downloaded. we need to modify the script if we want to get the data from a different month though
+You don't need to run the get data script, I already have the necessary files downloaded. we need to modify the script if we want to get the data from a different month though
 
-look at the jupyter notebook in the playground folder for my work in extracting the plaintext WET file in parallel. a large part of this has been modularized though; look at the data_proc_example to see what I mean 
+Look at the jupyter notebook in the playground folder for my work in extracting the plaintext WET file in parallel. A large part of this has been modularized though; look at the data_proc_example to see what I mean 
 
-also request at least 16 GB of ram on ROAR when you're trying to run the notebook
+Also request at least 16 GB of ram on ROAR when you're trying to run the notebook
 
 ## REPO STRUCTURE
 ```
