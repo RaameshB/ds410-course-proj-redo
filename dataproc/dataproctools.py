@@ -1,5 +1,6 @@
 import math
 import shutil
+import os
 
 DOMAINSPERWET = 20000
 def get_extracted_wet(spark_context, approx_sample_size, wet_paths_file = "data/wet.paths", seed = 0):
@@ -58,7 +59,7 @@ def get_extracted_wet(spark_context, approx_sample_size, wet_paths_file = "data/
     return str_rdd
 
 def save_rdd(rdd, path_to_save, overwrite=False):
-    if overwrite:
+    if overwrite and os.path.exists(path_to_save):
         shutil.rmtree(path_to_save)
     rdd.saveAsPickleFile(path_to_save)
 
