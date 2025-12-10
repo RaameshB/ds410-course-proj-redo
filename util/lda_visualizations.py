@@ -112,13 +112,3 @@ def visualize_topics(lda_model, vocabulary, df_transformed=None, num_words=10):
             plt.tight_layout()
             plt.show()
 
-
-
-# Here we are calling the visualizations. Uncomment when you want to employ it.
-# visualize_topics(lda_model, vocab, transformed, num_words=10)
-
-
-
-
-
-
