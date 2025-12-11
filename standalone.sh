@@ -1,9 +1,9 @@
 #!/bin/bash
 #SBATCH --job-name=spark_standalone
-#SBATCH --nodes=2
+#SBATCH --nodes=4
 #SBATCH --ntasks-per-node=1
-#SBATCH --cpus-per-task=1
-#SBATCH --mem=64G
+#SBATCH --cpus-per-task=8
+#SBATCH --mem=128G
 #SBATCH --time=00:30:00
 #SBATCH --output=spark-%j.out
 #SBATCH --error=spark-%j.err
@@ -18,9 +18,13 @@ module load jdk
 source activate ds410
 module use /gpfs/group/RISE/sw7/modules
 module load spark/3.3.0
+source .venv/bin/activate
+#conda activate ds41
 
-export PYSPARK_PYTHON=python3
-export PYSPARK_DRIVER_PYTHON=python3
+#python3 -m pip install optuna seaborn matplotlib plotly wordcloud -y
+
+export PYSPARK_PYTHON=$PWD/.venv/bin/python3
+export PYSPARK_DRIVER_PYTHON=$PWD/.venv/bin/python3
 
 echo "modules loaded"
 
@@ -68,7 +72,7 @@ echo "Master URL: $MASTER_URL"
 
 # Record the start time
 start_time=$(date +%s)
-$SPARK_HOME/bin/spark-submit --master $MASTER_URL main.py
+$SPARK_HOME/bin/spark-submit --master $MASTER_URL --driver-memory 50G --executor-memory 60G --executor-cores 8 --conf spark.executor.memoryOverhead=8G main.py
 
 # Record the end time
 end_time=$(date +%s)

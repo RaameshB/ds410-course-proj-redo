@@ -1,7 +1,9 @@
 from pyspark.sql import SparkSession
 class SparkHandler:
-    def __init__(self, driver_mem = 4, executor_mem = 4, mem_overhead = 4, available_cores=None):
-        if available_cores is not None:
+    def __init__(self, driver_mem = 4, executor_mem = 4, mem_overhead = 4, available_cores=None, cluster=False):
+        if cluster:
+            self.spark_session = SparkSession.builder.appName("DS410 Project").getOrCreate()
+        elif available_cores is not None:
             self.spark_session = SparkSession.builder.appName("DataProc")\
                 .config("spark.executor.cores", f"{available_cores}")\
                 .config("spark.driver.memory", f"{driver_mem}g")\

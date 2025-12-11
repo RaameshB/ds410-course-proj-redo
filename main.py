@@ -17,7 +17,13 @@ import optuna
 # In[2]:
 
 
-handler = SparkHandler(available_cores=28, driver_mem = 35, executor_mem = 35, mem_overhead = 35) # look at the parameters for SparkHandler to increase max memory
+print("\n\n========================================")
+print("                      STAGE ONE")
+print("========================================\n\n")
+
+
+
+handler = SparkHandler(available_cores=8, driver_mem = 35, executor_mem = 35, mem_overhead = 35, cluster=True) # look at the parameters for SparkHandler to increase max memory
 ss = handler.get_spark_session()
 sc = handler.get_spark_context()
 
@@ -50,6 +56,13 @@ loaded_df = ss.read.json("saved_intermediates/filtered_dataframe")
 # loaded_df.head()
 
 # In[9]:
+
+
+
+
+print("\n\n========================================")
+print("                      STAGE TWO")
+print("========================================\n\n")
 
 
 tuning_sample = loaded_df.sample(0.2)
@@ -126,6 +139,12 @@ learningDecay = best_params['lr decay']
 learningOffset = best_params['offset']
 maxItr = best_params['intrs']
 subsamplingRate = best_params['subsampling rate']
+
+
+
+print("\n\n========================================")
+print("                      STAGE THREE")
+print("========================================\n\n")
 
 # 1) Tokenize text into tokens
 tokenizer = RegexTokenizer(minTokenLength=minTokenLength, gaps=False, pattern=r"\b[a-zA-Z]+[\d]*(?:[-'][a-zA-Z]+[\d]*)*\b", inputCol="raw_content", outputCol="tokenized")
